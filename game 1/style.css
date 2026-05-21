@@ -1,0 +1,237 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #090910;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Thanh quản lý thời gian khẩn cấp */
+.timer-box {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.stage-name {
+    font-size: 1.2rem;
+    color: #ff3e6c;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.countdown-text {
+    font-size: 3.5rem;
+    font-weight: bold;
+    font-family: monospace;
+    color: #00ffcc;
+    margin: 5px 0;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #111122;
+    border-radius: 6px;
+    border: 1px solid #222244;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    width: 100%;
+    height: 100%;
+    background: #00e676;
+    transition: width 1s linear, background-color 0.5s;
+}
+
+/* Khung nhìn trò chơi */
+.game-viewport {
+    width: 90%;
+    max-width: 900px;
+    height: 400px;
+    background: #131326;
+    border: 3px solid #2a2a50;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hiệu ứng bối cảnh áp sát nguy hiểm */
+.env-effect {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(to top, rgba(255, 0, 85, 0.2), transparent);
+    pointer-events: none;
+    transition: height 1s linear;
+    z-index: 2;
+}
+
+/* Camera Quét Laser Màn 5 */
+@keyframes laser-scan {
+    0% { transform: translateX(-50%) rotate(-20deg); }
+    50% { transform: translateX(-50%) rotate(20deg); }
+    100% { transform: translateX(-50%) rotate(-20deg); }
+}
+.camera-laser {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 204, 0, 0.25), transparent);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform-origin: top center;
+    display: none;
+    z-index: 3;
+}
+.camera-laser.alarm {
+    background: linear-gradient(to bottom, rgba(255, 23, 68, 0.6), transparent) !important;
+    animation: laser-scan 0.4s infinite linear !important;
+}
+
+/* Khu vực sàn đấu */
+.game-arena {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
+    z-index: 4;
+}
+
+.side-dock {
+    width: 180px;
+    background: rgba(255, 255, 255, 0.03);
+    border-right: 2px dashed #2a2a50;
+    border-left: 2px dashed #2a2a50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.dock-title { margin: 0 0 10px 0; color: #888; font-size: 0.8rem; }
+.char-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Các Nhân vật / Xe Hàng */
+.character {
+    padding: 10px;
+    background: #1f4068;
+    border: 1px solid #162447;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    user-select: none;
+    transition: background 0.2s, transform 0.2s;
+}
+.character:hover { background: #0f3460; }
+.character.selected {
+    background: #e43f5a;
+    border-color: #ff3e6c;
+    transform: scale(1.05);
+}
+
+.center-path {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Công cụ di chuyển (Ô / Thuyền / Thang / Xe) */
+.transport-vehicle {
+    width: 90px;
+    height: 90px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #00ffcc;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 20px; /* start position */
+    transition: left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+#vehicle-icon { font-size: 1.5rem; margin-bottom: 2px; }
+#passenger-slots { font-size: 0.8rem; color: #00ffcc; font-weight: bold; }
+
+/* Bảng điều khiển nút bấm */
+.control-panel { margin-top: 20px; }
+.action-btn {
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    background: #ff3e6c;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 62, 108, 0.4);
+    transition: 0.2s;
+}
+.action-btn:hover { background: #ff1f53; }
+
+/* 🚨 HIỆU ỨNG RUNG LẮC MÀN HÌNH DỮ DỘI KHI THUA */
+@keyframes shake {
+    0%, 100% { transform: translate(0, 0); }
+    10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 5px); }
+    20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
+}
+.screen-game-over-shake {
+    animation: shake 0.15s infinite;
+    border-color: #ff1744 !important;
+}
+/* Giao diện Menu Chọn Màn */
+.level-menu-container {
+    text-align: center;
+    background: #111125;
+    padding: 40px;
+    border-radius: 16px;
+    border: 2px solid #2a2a50;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    width: 90%;
+    max-width: 500px;
+}
+
+.level-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.level-btn {
+    padding: 15px;
+    background: #1f4068;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 1px solid #162447;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.level-btn:hover {
+    background: #00ffcc;
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+    transform: scale(1.02);
+}

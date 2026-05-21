@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tick-Tock Survival</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="level-menu-container" id="level-menu" style="display: none;">
+        <h1 style="color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.5);">CHỌN MÀN CHƠI</h1>
+        <p style="color: #888;">Hãy chọn thử thách bạn muốn vượt qua:</p>
+        <div class="level-grid">
+            <button class="level-btn" onclick="selectLevel(1)">Màn 1: Trạm Xe Buýt</button>
+            <button class="level-btn" onclick="selectLevel(2)">Màn 2: Thuyền Cứu Hộ</button>
+            <button class="level-btn" onclick="selectLevel(3)">Màn 3: Thang Sinh Tồn</button>
+            <button class="level-btn" onclick="selectLevel(4)">Màn 4: Thung Lũng Hoang Dã</button>
+            <button class="level-btn" onclick="selectLevel(5)">Màn 5: Phi Vụ Cuối Cùng</button>
+        </div>
+        <button class="action-btn" style="background: #2a2a50; margin-top: 20px; width: 100%;" onclick="window.location.href='../index.html'">THOÁT RA TRANG CHỦ</button>
+    </div>
+
+    <div id="game-play-zone">
+        <div class="timer-box">
+            <div class="stage-name" id="stage-title">MÀN 1: CƠN MƯA TẠI TRẠM XE BUÝT</div>
+            <div class="countdown-text" id="time-left">17:00</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="game-viewport" id="viewport">
+            <div class="env-effect" id="env-effect"></div>
+            <div class="camera-laser" id="laser-scan"></div>
+
+            <div class="game-arena">
+                <div class="side-dock" id="start-dock">
+                    <h4 class="dock-title">XUẤT PHÁT</h4>
+                    <div class="char-container" id="start-chars"></div>
+                </div>
+
+                <div class="center-path">
+                    <div class="transport-vehicle" id="vehicle">
+                        <span id="vehicle-icon">🌂</span>
+                        <div id="passenger-slots"></div>
+                    </div>
+                </div>
+
+                <div class="side-dock" id="end-dock">
+                    <h4 class="dock-title">ĐÍCH ĐẾN</h4>
+                    <div class="char-container" id="end-chars"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <button class="action-btn" id="action-btn" onclick="handleAction()">DI CHUYỂN QUA ĐÍCH</button>
+            <button class="action-btn" style="background: #2a2a50; margin-left: 10px;" onclick="backToMenu()">ĐỔI MÀN CHƠI</button>
+            <button class="action-btn" style="background: #111125; margin-left: 10px; border: 1px solid #2a2a50;" onclick="window.location.href='../index.html'">VỀ TRANG CHỦ</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

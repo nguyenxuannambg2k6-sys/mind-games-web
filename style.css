@@ -1,0 +1,256 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #050510 0%, #0a0a25 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ================= THIẾT KẾ KHU VỰC BOX LOGIN / REGISTER ================= */
+.auth-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.auth-box {
+    background: #0f0f26;
+    border: 2px solid #1f1f44;
+    border-radius: 12px;
+    padding: 35px;
+    width: 90vw;
+    max-width: 380px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.auth-box h2 {
+    margin: 0 0 5px 0;
+    color: #ff3e6c;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 62, 108, 0.3);
+}
+
+.auth-box p {
+    color: #666688;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: #00ffcc;
+    margin-bottom: 6px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 11px;
+    box-sizing: border-box;
+    background: #060610;
+    border: 1px solid #1f1f44;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.input-group input:focus {
+    border-color: #00d2ff;
+    box-shadow: 0 0 8px rgba(0, 210, 255, 0.3);
+}
+
+.auth-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.login-main-btn {
+    background: #00ffcc;
+    color: #000;
+}
+.login-main-btn:hover {
+    box-shadow: 0 0 12px #00ffcc;
+    transform: translateY(-1px);
+}
+
+.register-sub-btn {
+    background: #2a2a50;
+    color: #fff;
+}
+.register-sub-btn:hover {
+    background: #363666;
+}
+
+/* ================= GIAO DIỆN SẢNH CHÍNH LOBBY ================= */
+.lobby-container {
+    width: 90vw;
+    max-width: 1000px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.lobby-header h1 {
+    font-size: 2.5rem;
+    color: #00ffcc;
+    text-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+    margin: 0 0 5px 0;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    color: #8888b0;
+    font-size: 1.1rem;
+    margin: 0 0 15px 0;
+}
+
+.user-welcome {
+    font-size: 0.9rem;
+    color: #ffea00;
+    font-weight: bold;
+    background: #161638;
+    padding: 6px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 35px;
+    border: 1px dashed #ffea00;
+}
+
+/* Lưới hiển thị các thẻ game */
+.games-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+/* Định dạng thẻ bưu thiếp của từng Game */
+.game-card {
+    background: rgba(22, 22, 56, 0.6);
+    border: 2px solid #1f1f44;
+    border-radius: 16px;
+    padding: 30px;
+    width: 320px;
+    box-sizing: border-box;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+.card-1:hover { border-color: #ff3e6c; box-shadow: 0 0 20px rgba(255, 62, 108, 0.2); }
+.card-2:hover { border-color: #00d2ff; box-shadow: 0 0 20px rgba(0, 210, 255, 0.2); }
+
+.card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #1f1f44;
+}
+.card-1 .card-badge { color: #ff3e6c; border: 1px solid #ff3e6c; }
+.card-2 .card-badge { color: #00d2ff; border: 1px solid #00d2ff; }
+
+.game-icon {
+    font-size: 3.5rem;
+    margin: 15px 0;
+}
+
+.game-card h2 {
+    font-size: 1.4rem;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.game-card p {
+    font-size: 0.9rem;
+    color: #a0a0c0;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 25px;
+    flex: 1;
+}
+
+/* Nút bấm chuyển hướng */
+.play-btn {
+    text-decoration: none;
+    padding: 12px 35px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #fff;
+    border-radius: 8px;
+    width: 80%;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.btn-1 { background: #ff3e6c; box-shadow: 0 4px 12px rgba(255, 62, 108, 0.3); }
+.btn-1:hover { background: #ff1f53; transform: scale(1.05); }
+
+.btn-2 { background: #00d2ff; color: #000; box-shadow: 0 4px 12px rgba(0, 210, 255, 0.3); }
+.btn-2:hover { background: #00ffcc; transform: scale(1.05); }
+
+.lobby-footer {
+    color: #444466;
+    font-size: 0.85rem;
+    border-top: 1px solid #1f1f44;
+    padding-top: 25px;
+}
+
+.logout-btn {
+    background: none;
+    border: 1px solid #ff3e6c;
+    color: #ff3e6c;
+    padding: 6px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: 0.2s;
+}
+.logout-btn:hover {
+    background: #ff3e6c;
+    color: #fff;
+}

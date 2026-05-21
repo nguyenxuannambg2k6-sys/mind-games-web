@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Games Web Center</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="auth-wrapper" id="auth-zone">
+        <div class="auth-box">
+            <h2 id="auth-title">HỆ THỐNG XÁC THỰC</h2>
+            <p id="auth-desc">Vui lòng đăng nhập để truy cập máy chủ trò chơi</p>
+            
+            <div class="input-group">
+                <label>Tên tài khoản</label>
+                <input type="text" id="auth-user" placeholder="Nhập tên tài khoản...">
+            </div>
+            
+            <div class="input-group">
+                <label>Mật khẩu</label>
+                <input type="password" id="auth-pass" placeholder="Nhập mật khẩu...">
+            </div>
+
+            <div class="auth-btn-group">
+                <button class="auth-btn login-main-btn" onclick="handleLogin()">ĐĂNG NHẬP</button>
+                <button class="auth-btn register-sub-btn" onclick="handleRegister()">ĐĂNG KÝ MỚI</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="lobby-container" id="lobby-zone" style="display: none;">
+        <header class="lobby-header">
+            <h1>🧠 MIND GAMES CENTER 🧠</h1>
+            <p class="subtitle">Hệ Thống Trò Chơi Trí Tuệ & Sinh Tồn Toán Học</p>
+            <div class="user-welcome" id="user-welcome">Chào mừng, đặc vụ!</div>
+        </header>
+
+        <div class="games-grid">
+            <div class="game-card card-1">
+                <div class="card-badge">MÔ PHỎNG</div>
+                <div class="game-icon">⏱️</div>
+                <h2>Game 1: Tick-Tock Survival</h2>
+                <p>Cuộc đua sinh tồn tối ưu hóa thời gian di chuyển qua 5 màn chơi nghẹt thở. Hãy đưa tất cả vượt qua quy luật khắt khe trước khi bão lũ, hỏa hoạn áp sát!</p>
+                <a href="game 1/index.html" class="play-btn btn-1">BẮT ĐẦU CHƠI</a>
+            </div>
+
+            <div class="game-card card-2">
+                <div class="card-badge">XÁC SUẤT</div>
+                <div class="game-icon">🚪</div>
+                <h2>Game 2: Monty Hall Paradox</h2>
+                <p>Đối đầu với AI bảo mật tối cao qua ma trận lên tới 100 cánh cửa. Trực giác hay Toán học sẽ giúp bạn chiếm đoạt lõi dữ liệu hoàng gia an toàn?</p>
+                <a href="game 2/index.html" class="play-btn btn-2">XÂM NHẬP NGAY</a>
+            </div>
+        </div>
+
+        <footer class="lobby-footer">
+            <button class="logout-btn" onclick="handleLogout()">ĐĂNG XUẤT TÀI KHOẢN</button>
+            <p style="margin-top: 15px;">Nguyễn Xuân Nam © 2026 </p>
+        </footer>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxBKE4QHJ8-t46kH_HwjX53sy1_icOfgE",
+            authDomain: "mind-games-web.firebaseapp.com",
+            projectId: "mind-games-web",
+            storageBucket: "mind-games-web.firebasestorage.app",
+            messagingSenderId: "1015291778643",
+            appId: "1:1015291778643:web:8437d1019117b216e2d8a6",
+            measurementId: "G-SD03225NWV"
+        };
+
+        // Khởi tạo ứng dụng
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(db);
+
+        // Kiểm tra xem máy này trước đó đã đăng nhập chưa
+        window.addEventListener('load', () => {
+            let sessionUser = sessionStorage.getItem("activeUser");
+            if (sessionUser) {
+                showLobby(sessionUser);
+            }
+        });
+
+        // 📝 XỬ LÝ ĐĂNG KÝ TÀI KHOẢN MỚI
+        window.handleRegister = function() {
+            const user = document.getElementById('auth-user').value.trim();
+            const pass = document.getElementById('auth-pass').value.trim();
+
+            if (!user || !pass) {
+                alert("Không được để trống tên tài khoản hoặc mật khẩu!");
+                return;
+            }
+
+            // Kiểm tra xem tài khoản này đã có trên Database chưa
+            get(child(dbRef, `accounts/${user}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    alert("Tên tài khoản này đã tồn tại trên hệ thống! Vui lòng chọn tên khác.");
+                } else {
+                    // Nếu chưa có, tiến hành tạo mới tài khoản lên đám mây
+                    set(ref(db, `accounts/${user}`), {
+                        username: user,
+                        password: pass, // Lưu trữ mật khẩu dạng chuỗi cho web thuần tĩnh
+                        createdAt: new Date().toISOString()
+                    }).then(() => {
+                        alert(`Đăng ký tài khoản [ ${user} ] thành công! Giờ bạn có thể bấm Đăng Nhập.`);
+                    });
+                }
+            }).catch((err) => {
+                alert("Lỗi kết nối cơ sở dữ liệu: " + err.message);
+            });
+        }
+
+        // 🔑 XỬ LÝ ĐĂNG NHẬP HỆ THỐNG
+        window.handleLogin = function() {
+            const user = document.getElementById('auth-user').value.trim();
+            const pass = document.getElementById('auth-pass').value.trim();
+
+            if (!user || !pass) {
+                alert("Vui lòng điền đầy đủ thông tin!");
+                return;
+            }
+
+            // Tìm kiếm tài khoản trên Cloud
+            get(child(dbRef, `accounts/${user}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const accountData = snapshot.val();
+                    // So khớp mật khẩu dữ liệu
+                    if (accountData.password === pass) {
+                        sessionStorage.setItem("activeUser", user);
+                        showLobby(user);
+                    } else {
+                        alert("Sai mật khẩu! Vui lòng kiểm tra lại.");
+                    }
+                } else {
+                    alert("Tài khoản không tồn tại! Bạn hãy bấm Đăng Ký Mới nếu chưa có nick.");
+                }
+            }).catch((err) => {
+                alert("Lỗi xác thực: " + err.message);
+            });
+        }
+
+        // Hàm mở khóa màn hình trò chơi
+        function showLobby(username) {
+            document.getElementById('auth-zone').style.display = 'none';
+            document.getElementById('lobby-zone').style.display = 'block';
+            document.getElementById('user-welcome').innerText = `TÀI KHOẢN HOẠT ĐỘNG: ${username.toUpperCase()}`;
+        }
+
+        // Đăng xuất
+        window.handleLogout = function() {
+            sessionStorage.removeItem("activeUser");
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
