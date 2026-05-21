@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mind Trust: Monty Hall Paradox</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="menu-container" id="level-menu">
+        <h1>THE MIND TRUST: LỰA CHỌN SINH TỬ</h1>
+        <p>Chọn phân khu máy chủ bảo mật để tiến hành xâm nhập:</p>
+        <div class="menu-grid">
+            <button class="menu-btn" onclick="selectLevel(1)">Màn 1: Cổng Cơ Bản (3 Cửa)</button>
+            <button class="menu-btn" onclick="selectLevel(2)">Màn 2: Tường Lửa Cấp 2 (5 Cửa)</button>
+            <button class="menu-btn" onclick="selectLevel(3)">Màn 3: Ma Trận Dữ Liệu (20 Cửa)</button>
+            <button class="menu-btn" onclick="selectLevel(4)">Màn 4: Siêu Máy Chủ (50 Cửa)</button>
+            <button class="menu-btn" onclick="selectLevel(5)">Màn 5: Lõi Hoàng Gia (100 Cửa)</button>
+        </div>
+        <button class="menu-btn" style="background: #1f1f44; margin-top: 15px; border-color: #ff3e6c; color: #ff3e6c;" onclick="window.location.href='../index.html'">THOÁT RA TRANG CHỦ</button>
+    </div>
+
+    <div id="game-play-zone" style="display: none;">
+        <div class="header-box">
+            <div class="stage-title" id="stage-title">MÀN 1: CỔNG CƠ BẢN</div>
+            <div class="instruction-text" id="instruction">BẤM CHỌN 1 CÁNH CỬA BẤT KỲ ĐỂ BẮT ĐẦU XÂM NHẬP</div>
+        </div>
+
+        <div class="doors-viewport" id="viewport">
+            <div class="doors-grid" id="doors-grid"></div>
+        </div>
+
+        <div class="control-panel" id="control-panel" style="display: none;">
+            <div class="countdown-text" id="countdown-display">ĐANG CHỜ...</div>
+            <div class="btn-group">
+                <button class="game-btn switch-btn" onclick="confirmDecision(true)">ĐỔI CỬA KHÁC</button>
+                <button class="game-btn keep-btn" onclick="confirmDecision(false)">GIỮ NGUYÊN CỬA</button>
+            </div>
+        </div>
+
+        <div class="footer-panel" style="margin-top: 15px; display: flex; justify-content: center; gap: 20px;">
+            <button class="nav-btn" onclick="backToMenu()">QUAY VỀ CHỌN MÀN</button>
+            <button class="nav-btn" style="color: #00ffcc;" onclick="window.location.href='../index.html'">QUAY VỀ TRANG CHỦ</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
